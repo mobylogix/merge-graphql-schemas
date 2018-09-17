@@ -56,14 +56,14 @@ const _makeMergedFieldDefinitions = (merged, candidate) => _addCommentsToAST(can
     if (!original) {
       fields.push(field);
     } else if (field.type.kind === 'NamedType') {
-      if (field.type.name.value !== original.type.name.value) {
+      if (field.type && field.type.name && original.type && original.type.name && field.type.name.value !== original.type.name.value) {
         throw new Error(
           `Conflicting types for ${merged.name.value}.${field.name.value}: ` +
           `${field.type.name.value} != ${original.type.name.value}`,
         );
       }
     } else if (field.type.kind === 'NonNullType') {
-      if (field.type.type.name.value !== original.type.type.name.value) {
+      if (field.type && field.type.type && field.type.name && original.type && original.type.type && original.type.name && field.type.type.name.value !== original.type.type.name.value) {
         throw new Error(
           `Conflicting types for ${merged.name.value}.${field.name.value}: ` +
           `${field.type.type.name.value} != ${original.type.type.name.value}`,
